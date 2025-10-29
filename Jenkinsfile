@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        // Prefer using Jenkins credentials (recommended). For quick local test you may hardcode
         ARM_CLIENT_ID       = 'f22922a1-9e51-4f80-9414-007aa4dc2c9e'
         ARM_CLIENT_SECRET   = 'E0v8Q~SzTqtq6PU-v-9cv-jVc4DR5Waes~4AbbRh'
         ARM_TENANT_ID       = '57e99d21-825c-451e-a374-8121d0c998ef'
@@ -19,28 +20,31 @@ pipeline {
         stage('Initialize Terraform') {
             steps {
                 echo '🚀 Initializing Terraform...'
-                sh 'terraform init'
+                // Windows: use bat
+                bat 'terraform --version'
+                bat 'terraform init -input=false'
             }
         }
 
         stage('Validate Configuration') {
             steps {
                 echo '🧩 Validating Terraform configuration...'
-                sh 'terraform validate'
+                bat 'terraform validate'
             }
         }
 
         stage('Plan Deployment') {
             steps {
                 echo '🧱 Generating Terraform plan...'
-                sh 'terraform plan -out=tfplan'
+                bat 'terraform plan -out=tfplan -input=false'
             }
         }
 
         stage('Apply Deployment') {
             steps {
                 echo '☁️ Applying Terraform changes to Azure...'
-                sh 'terraform apply -auto-approve tfplan'
+                // Note: -auto-approve used so no interactive prompt
+                bat 'terraform apply -auto-approve tfplan'
             }
         }
     }
@@ -50,7 +54,7 @@ pipeline {
             echo '✅ Website updated successfully on Azure!'
         }
         failure {
-            echo '❌ Deployment failed. Check logs for details.'
+            echo '❌ Deployment failed. Check logs for details!'
         }
     }
 }
