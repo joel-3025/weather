@@ -3,10 +3,10 @@ pipeline {
 
   environment {
     // Use Jenkins credentials (add them under Manage Jenkins -> Credentials)
-    ARM_CLIENT_ID       = credentials('ARM_CLIENT_ID')
-    ARM_CLIENT_SECRET   = credentials('ARM_CLIENT_SECRET')
-    ARM_TENANT_ID       = credentials('ARM_TENANT_ID')
-    ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
+  ARM_CLIENT_ID       = 'f22922a1-9e51-4f80-9414-007aa4dc2c9e'
+  ARM_CLIENT_SECRET   = 'E0v8Q~SzTqtq6PU-v-9cv-jVc4DR5Waes~4AbbRh'
+  ARM_TENANT_ID       = '57e99d21-825c-451e-a374-8121d0c998ef'
+  ARM_SUBSCRIPTION_ID = '78538b16-31cc-4bc6-ae0a-706671075959'
   }
 
   stages {
